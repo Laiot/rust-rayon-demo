@@ -1,13 +1,21 @@
 import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.List;
 
 class Main {
     public static void main(String[] args) {
         long startTime = System.nanoTime();
-        int[] fooVector = IntStream.range(1, 10).toArray();
+        List<Integer> fooVector = new ArrayList<>();
+        IntStream.range(1, 10).forEach(fooVector::add);
 
         System.out.printf("The sum is: %d\n", seq_iterator(fooVector)); 
         long endTime   = System.nanoTime();
         long totalTime = endTime - startTime;
+        System.out.printf("Running time in ms: %d\n", totalTime / 1000000);
+
+        System.out.printf("The sum is: %d\n", par_iterator(fooVector)); 
+        endTime   = System.nanoTime();
+        totalTime = endTime - startTime;
         System.out.printf("Running time in ms: %d\n", totalTime / 1000000);
     }
 
@@ -32,13 +40,17 @@ class Main {
         }
     }
 
-    public static int seq_iterator(int[] fooVector){
-        int sum = 0;
-        for(int value: fooVector){
-            if (value > 5){
-                sum += factorial(value);
-            }
-        }
-        return sum;
+    public static int seq_iterator(List<Integer> fooVector){
+        return fooVector.stream()
+            .filter(x -> x>5)
+            .map(x -> factorial(x))
+            .reduce(0, (x,y) -> x+y);
+    }
+
+    public static int par_iterator(List<Integer> fooVector){
+        return fooVector.parallelStream()
+            .filter(x -> x>5)
+            .map(x -> factorial(x))
+            .reduce(0, (x,y) -> x+y);
     }
 }
