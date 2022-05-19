@@ -1,4 +1,5 @@
 use rayon::prelude::*;
+use std::time::Instant;
 
 /**
  * Simple implementation of an algorithm to find the fibonacci sequence given a starting number.
@@ -64,6 +65,7 @@ fn par_iterator(foo_vector: &mut Vec<u32>) -> u32 {
 // }
 
 fn main() {
+    let now = Instant::now();
 
     let mut foo_vector: Vec<u32> = (0..10).collect();
 
@@ -72,4 +74,7 @@ fn main() {
     println!("The sum is {}", par_iterator(&mut foo_vector));
 
     // println!("The sum is {}", unsafe_par_iterator(&mut foo_vector));
+
+    let elapsed = now.elapsed();
+    println!("Running time: {:.2?}", elapsed);
 }
