@@ -71,7 +71,7 @@ fn main() {
 
     println!("The sum is {}", seq_iterator(&mut foo_vector));
 
-    println!("The sum is {}", par_iterator(&mut foo_vector));
+    //println!("The sum is {}", par_iterator(&mut foo_vector));
 
     // println!("The sum is {}", unsafe_par_iterator(&mut foo_vector));
 
