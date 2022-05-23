@@ -1,7 +1,7 @@
-FROM rust:1.60
+FROM docker.io/rust:1.60
 
 WORKDIR /usr/src/rust-rayon-demo
-COPY . .
+COPY app .
 
 RUN cargo install --path .
 

@@ -1,6 +1,6 @@
 FROM  registry.access.redhat.com/ubi8/openjdk-11 as build
 
-ADD demo/ .
+ADD app/ .
 RUN mvn package
 
 FROM  registry.access.redhat.com/ubi8/openjdk-11
