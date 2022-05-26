@@ -8,7 +8,7 @@ fn main() -> Result<(), Error> {
 
     client.batch_execute(
         "
-        CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE IF NOT EXISTS app_user (
             id              SERIAL PRIMARY KEY,
             username        VARCHAR UNIQUE NOT NULL,
             password        VARCHAR NOT NULL,
@@ -35,6 +35,10 @@ fn main() -> Result<(), Error> {
             id, username, password, email
         );
     }
-    
+
+    client.batch_execute(
+        "DROP TABLE app_user",
+    )?;
+
     Ok(())
 }
