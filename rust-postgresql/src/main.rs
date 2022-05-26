@@ -24,21 +24,10 @@ fn main() -> Result<(), Error> {
         )?;
     }
     
-    for row in client.query("SELECT id, username, password, email FROM app_user", &[])? {
+    for row in client.query("SELECT id", &[])? {
         let id: i32 = row.get(0);
-        let username: &str = row.get(1);
-        let password: &str = row.get(2);
-        let email: &str = row.get(3);
-    
-        println!(
-            "found app user: {}) {} | {} | {}",
-            id, username, password, email
-        );
+        client.execute("DELETE FROM app_user WHERE id=$1", &[&id])?;
     }
-
-    client.batch_execute(
-        "DROP TABLE app_user",
-    )?;
 
     Ok(())
 }
