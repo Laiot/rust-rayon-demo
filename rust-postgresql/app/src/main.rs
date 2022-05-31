@@ -1,8 +1,11 @@
 use postgres::{Client, Error, NoTls};
 
 fn main() -> Result<(), Error> {
+    use std::time::Instant;
+    let now = Instant::now();
+
     let mut client = Client::connect(
-        "postgresql://dboperator:operatorpass123@localhost:5243/postgres",
+        "postgresql://operator:operatorpass123@localhost:5432/rust-rayon-demo",
         NoTls,
     )?;
 
@@ -12,7 +15,7 @@ fn main() -> Result<(), Error> {
             id              SERIAL PRIMARY KEY,
             username        VARCHAR UNIQUE NOT NULL,
             password        VARCHAR NOT NULL,
-            email           VARCHAR UNIQUE NOT NULL
+            email           VARCHAR NOT NULL
             )
     ",
     )?;
@@ -24,10 +27,13 @@ fn main() -> Result<(), Error> {
         )?;
     }
     
-    for row in client.query("SELECT id", &[])? {
+    for row in client.query("SELECT id FROM app_user", &[])? {
         let id: i32 = row.get(0);
         client.execute("DELETE FROM app_user WHERE id=$1", &[&id])?;
     }
+
+    let elapsed = now.elapsed();
+    println!("Execution ended in {:.2?}", elapsed);
 
     Ok(())
 }

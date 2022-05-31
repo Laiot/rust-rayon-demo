@@ -5,4 +5,4 @@ COPY app .
 
 RUN cargo install --path .
 
-CMD ["rust-rayon-demo"]
+CMD ["rust-postgresql"]
