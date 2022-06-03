@@ -95,6 +95,6 @@ COPY --chown=185 --from=build /home/jboss/target/quarkus-app/quarkus/ /deploymen
 EXPOSE 8080
 USER 185
 ENV AB_JOLOKIA_OFF=""
-ENV JAVA_OPTS="-Dquarkus.log.level=OFF"
+ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
 
